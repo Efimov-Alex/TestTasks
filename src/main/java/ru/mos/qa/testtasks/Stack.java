@@ -1,6 +1,6 @@
 package ru.mos.qa.testtasks;
 
-class Stack {
+public class Stack {
   private int mSize;
   private int[] stackArray;
   private int top;
@@ -12,14 +12,26 @@ class Stack {
   }
 
   public void addElement(int element) {
+    if (isFull()) {
+      throw new IllegalStateException("Stack is full");
+    }
     stackArray[++top] = element;
   }
 
   public int deleteElement() {
-    return stackArray[--top];
+    if (isEmpty()) {
+      throw new IllegalStateException("Stack is empty");
+    }
+    int deletedElement = readTop();
+    stackArray[top] = 0;
+    top -= 1;
+    return deletedElement;
   }
 
   public int readTop() {
+    if (isEmpty()) {
+      throw new IllegalStateException("Stack is empty");
+    }
     return stackArray[top];
 
   }
