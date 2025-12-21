@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+import static ru.mos.qa.testtasks.playground.config.TestConfig.*;
+
 public class AppPage {
     @FindBy(how= How.XPATH, using = "//input[@placeholder='User Name']")
     WebElement usernameText;
@@ -30,12 +32,12 @@ public class AppPage {
 
     public AppPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(DEFAULT_TIMEOUT_SECONDS));
     }
 
     public void textInput(String username, String password){
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@placeholder='User Name']")));
+        wait.until(ExpectedConditions.elementToBeClickable(usernameText));
         usernameText.sendKeys(username);
         passwordText.sendKeys(password);
 
@@ -47,7 +49,7 @@ public class AppPage {
 
     public boolean foundText(String text){
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//label[@id='loginstatus']")));
+        wait.until(ExpectedConditions.elementToBeClickable(label));
         if (label.getText().contains(text)){
             return true;
         }

@@ -17,13 +17,10 @@ public class BaseTests {
 
     @BeforeEach
     public void before() {
-        // 1. Автоматически скачает ChromeDriver (ВМЕСТО System.setProperty)
         WebDriverManager.chromedriver().setup();
 
-        // 2. Создаем настройки
         ChromeOptions options = new ChromeOptions();
 
-        // 3. ВСЕ эти опции ОБЯЗАТЕЛЬНЫ:
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--remote-allow-origins=*");
@@ -34,21 +31,16 @@ public class BaseTests {
         options.addArguments("--disable-extensions");
         options.addArguments("--disable-web-security");
 
-        // 4. Убираем лог
         System.setProperty("webdriver.chrome.silentOutput", "true");
 
-        // 5. Создаем драйвер
         driver = new ChromeDriver(options);
 
-        // 6. Таймауты (увеличь!)
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
         driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(20));
 
-        // 7. Ожидания
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
-        // 8. Пауза для стабилизации
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
